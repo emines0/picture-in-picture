@@ -3,17 +3,18 @@ const button = document.getElementById('button');
 
 // Prompt to select media stream, pass to video element, then play
 
-async function selectMediaStream(displayMediaOptions) {
-    let captureStream = null;
-  
+async function selectMediaStream() {
     try {
-      captureStream = await navigator.MediaDevices.getDisplayMedia(displayMediaOptions);
-    } catch (err) {
-      console.error(`Error: ${err}`);
+        const mediaStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+        videoElement.srcObject = mediaStream;
+        videoElement.onloadedmetadata = () => {
+            videoElement.play();
+        }
+        
+    } catch (error) {
+        console.error('Error: ', error);
     }
-    return captureStream;
-  }
-  
+}
 
 //On load
 
